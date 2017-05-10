@@ -1067,15 +1067,13 @@ public class VfsFileChooserDialog implements SelectionListener, MouseListener, V
   public void resolveVfsBrowser() {
     FileObject newRoot = null;
     try {
-      //      newRoot = rootFile.getFileSystem().getFileSystemManager().resolveFile(getSelectedFile().getName()
-      // .getURI());
       if ( currentPanel != null ) {
-        newRoot = currentPanel.resolveFile( getSelectedFile().getName().getURI() );
+        FileObject selectedFile = getSelectedFile();
+        newRoot = currentPanel.resolveFile( selectedFile.getName().getURI(), selectedFile.getFileSystem().getFileSystemOptions() );
       }
     } catch ( FileSystemException e ) {
       displayMessageBox( SWT.OK, Messages.getString( "VfsFileChooserDialog.error" ), e.getMessage() );
     }
-    //if (newRoot != null && !newRoot.equals(vfsBrowser.getRootFileObject())) {
     if ( newRoot != null ) {
       vfsBrowser.resetVfsRoot( newRoot );
     }
